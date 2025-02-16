@@ -20,7 +20,13 @@ public class PaymentPage extends Methods {
 
     public final String cityComplete = "address-ui-widgets-autoCompleteResult-0";
 
-    public final String addressState = "//input[@id='address-ui-widgets-enterAddressStateOrRegion']";
+    public final String addressState = "address-ui-widgets-enterAddressStateOrRegion";
+
+    public final String addressDistrict = "address-ui-widgets-enterAddressDistrictOrCounty";
+
+
+
+    public final String expectedUrl = "https://www.amazon.com.tr/gp/buy/addressselect/handlers/display.html?_from=cheetah";
 
     public boolean isNameBoxClickable() {
         return isElementClickable(nameBox   , "id", 10); // 10 seconds timeout or any preferred value
@@ -107,17 +113,30 @@ public class PaymentPage extends Methods {
 
 
     public boolean isAddressStateClickable() {
-        return isElementClickable(addressState   , "xpath", 10); // 10 seconds timeout or any preferred value
+        return isElementClickable(addressState   , "name", 10); // 10 seconds timeout or any preferred value
     }
 
     public boolean isAddressStateVisible() {
-        return isElementVisible(addressState, "xpath", 10); // 10 seconds timeout or any preferred value
+        return isElementVisible(addressState, "name", 10); // 10 seconds timeout or any preferred value
     }
 
     public void clickAddressState() {
-        jsclick(addressState, "xpath");
+        jsclick(addressState, "name");
     }
 
+
+
+    public boolean isAddressDistrictClickable() {
+        return isElementClickable(addressDistrict   , "id", 10); // 10 seconds timeout or any preferred value
+    }
+
+    public boolean isAddressDistrictVisible() {
+        return isElementVisible(addressDistrict, "id", 10); // 10 seconds timeout or any preferred value
+    }
+
+    public void clickAddressDistrict() {
+        click(addressDistrict, "id");
+    }
 
 
 
@@ -133,9 +152,11 @@ public class PaymentPage extends Methods {
 
     public void sendCity(String city){sendKeys(cityBox, "id", city);}
 
-    public void sendAddressState(String addressstate){sendKeys(cityBox, "id", addressstate);}
+    public void sendAddressState(String state){sendKeys(addressState, "name", state);}
+
+    public void sendAddressDistrict(String district){sendKeys(addressDistrict,"id", district);}
 
     public void scrollToCartIcon() {
-        scrollTo(addressState, "xpath");
+        scrollTo(addressState, "name");
     }
 }

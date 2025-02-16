@@ -8,7 +8,7 @@ public class LoginPage extends Methods {
         super(driver);
     }
 
-    public final String emailTextBox = "ap_email_login";
+    public final String emailTextBox = "email";
     public final String continueButton = "continue";
     public final String passwordTextBox = "ap_password";
     public final String loginButton = "signInSubmit";
@@ -30,20 +30,21 @@ public class LoginPage extends Methods {
     public final String expectedInvalidPasswordPopUpText = "Şifreniz yanlış";
 
 
+
     public String getLoginPageTextDisplay() {
         return findElement(loginPageText, "xpath").getText();
     }
 
     public boolean isEmailTextboxClickable() {
-        return isElementClickable(emailTextBox, "id", 10); // 10 seconds timeout or any preferred value
+        return isElementClickable(emailTextBox, "name", 10); // 10 seconds timeout or any preferred value
     }
 
     public boolean isEmailTextBoxVisible() {
-        return isElementVisible(emailTextBox, "id", 10); // 10 seconds timeout or any preferred value
+        return isElementVisible(emailTextBox, "name", 10); // 10 seconds timeout or any preferred value
     }
 
     public void clickEmailTextBox() {
-        click(emailTextBox, "id");
+        click(emailTextBox, "css");
     }
 
     public void clearEmailTextBox() {
@@ -51,7 +52,7 @@ public class LoginPage extends Methods {
     }
 
     public void sendEmailTextBox(String email) {
-        sendKeysJS(emailTextBox, "id", email);
+        sendKeysJS(emailTextBox, "name", email);
     }
     public boolean isContunieButtonClickable() {
         return isElementClickable(continueButton, "id", 10);

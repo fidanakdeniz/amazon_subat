@@ -98,6 +98,9 @@ public class Methods {
             case "id":
                 by = By.id(value);
                 break;
+            case "name":
+                by = By.name(value);
+                break;
             case "css":
                 by = By.cssSelector(value);
                 break;

@@ -1,6 +1,7 @@
 package com.deneme.pages;
 
 import com.deneme.methods.Methods;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
@@ -29,19 +30,14 @@ public class HomePage extends Methods {
     public final String expectedTodaysDealsText = "Günün Fırsatları";
     public final String expectedNewReleasesText = "Yeni Çıkanlar";
 
-
-    public boolean isCookieButtonClickable() {
-        return isElementClickable(cookieButton, "id", 10); // 10 seconds timeout or any preferred value
-    }
-
-    public boolean isCookieButtonVisible() {
-        return isElementVisible(cookieButton, "id", 10); // 10 seconds timeout or any preferred value
-    }
-
-    // Click the cookie button
     public void clickCookieButton() {
+        Assertions.assertTrue(isElementVisible(cookieButton, "id", 10), "Çerezler butonu görünmüyor!");
+        Assertions.assertTrue(isElementClickable(cookieButton, "id", 10), "Çerezler butonu tıklanabilir değil!");
         click(cookieButton, "id");
+        System.out.println("Çerezler butonuna tıklandı!");
     }
+
+
     public boolean isLoginButtonClickable() {
         return isElementClickable(accountButton, "id", 10);
     }
@@ -78,15 +74,7 @@ public class HomePage extends Methods {
         click(logOutButton, "id");
     }
 
-    public boolean isSearchBoxClickable() {
-        return isElementClickable(txtSearchBox, "id", 10); // 10 seconds timeout or any preferred value
-    }
 
-    public boolean isSearchBoxVisible() {
-        return isElementVisible(txtSearchBox, "id", 10); // 10 seconds timeout or any preferred value
-    }
-
-    // Click the cookie button
     public void clickSearchBox() {
         click(txtSearchBox, "id");
     }
@@ -99,67 +87,85 @@ public class HomePage extends Methods {
         klavyeTusunaBas(txtSearchBox, "id", Keys.ENTER);
     }
 
-    public boolean isCartButtonVisible() {
-        return isElementVisible(cartButton, "id", 10);
+    public void clickWriteEnterSearch(){
+        Assertions.assertTrue(isElementVisible(txtSearchBox, "id", 10), "Search butonu görünmüyor.");
+        Assertions.assertTrue(isElementClickable(txtSearchBox, "id", 10), "Search butonu tıklanabilir değil.");
+        clickSearchBox();
+        sendSearchBox("airpods");
+        pressEnterSearchBox();
+
     }
 
-    public boolean isCartButtonClickable() {
-        return isElementClickable(cartButton, "id", 10);
-    }
 
     public String getCartTextDisplay() {
         return getText(cartButton, "id");
     }
 
-    public boolean isOrdersButtonVisible() {
-        return isElementVisible(ordersButton, "id", 10);
-    }
-
-    public boolean isOrdersButtonClickable() {
-        return isElementClickable(ordersButton, "id", 10);
+    public void controlCartInHeader(){
+        Assertions.assertTrue(isElementVisible(cartButton, "id", 10), "Sepet butonu görünmüyor.");
+        Assertions.assertTrue(isElementClickable(cartButton, "id", 10), "Sepet butonu tıklanabilir değil.");
+        String actualCartText = getCartTextDisplay();
+        Assertions.assertTrue(actualCartText.contains(expectedCartText),
+                "Sepet yazısı yanlış: Beklenen: " + expectedCartText + ", Bulunan: " + actualCartText);
     }
 
     public String getOrdersTextDisplay() {
         return getText(ordersButton, "id");
     }
 
-    public boolean isBestSellersButtonVisible() {
-        return isElementVisible(bestSellersButton, "css", 10);
+
+    public void controlOrdersInHeader(){
+        Assertions.assertTrue(isElementVisible(ordersButton, "id",10), "Siparişler butonu görünmüyor." );
+        Assertions.assertTrue(isElementClickable(ordersButton, "id",10), "Siparişler butonu tıklanabilir değil." );
+        String actualOrdersText = getOrdersTextDisplay();
+        Assertions.assertTrue(actualOrdersText.contains(expectedOrdersText),
+                "Siparişler yazısı yanlış: Beklenen: " + expectedOrdersText + ", Bulunan: " + actualOrdersText);
+
     }
 
-    public boolean isBestSellersButtonClickable() {
-        return isElementClickable(bestSellersButton, "css", 10);
+
+    public boolean controlBestSellersInHeader() {
+        Assertions.assertTrue(isElementVisible(bestSellersButton,"css", 10), "Çok Satanlar butonu görünmüyor.");
+        Assertions.assertTrue(isElementClickable(bestSellersButton,"css", 10), "Çok Satanlar butonu tıklanabilir değil.");
+        String actualBestSellersText = getBestSellersTextDisplay();
+        Assertions.assertTrue(actualBestSellersText.contains(expectedBestSellersText),
+                "Çok Satanlar yazısı yanlış: Beklenen: " + expectedBestSellersText + ", Bulunan: " + actualBestSellersText);
+
+        return true;
     }
 
     public String getBestSellersTextDisplay() {
         return getText(bestSellersButton, "css");
     }
 
-    public boolean isTodaysDealsButtonVisible() {
-        return isElementVisible(todaysDealsButton, "css", 10);
-    }
+    public boolean controlTodaysDealsInHeader() {
+        Assertions.assertTrue(isElementVisible(todaysDealsButton,"css", 10), "Günün Fırsatları butonu görünmüyor.");
+        Assertions.assertTrue(isElementClickable(todaysDealsButton,"css", 10), "Günün Fırsatları butonu görünmüyor.");
+        String actualTodaysDealsText = getTodaysDealsTextDisplay();
+        Assertions.assertTrue(actualTodaysDealsText.contains(expectedTodaysDealsText),
+                "Günün Fırsatları yazısı yanlış: Beklenen: " + expectedTodaysDealsText + ", Bulunan: " + actualTodaysDealsText);
 
-    public boolean isTodaysDealsButtonClickable() {
-        return isElementClickable(todaysDealsButton, "css", 10);
+        return true;
+
     }
 
     public String getTodaysDealsTextDisplay() {
         return getText(todaysDealsButton, "css");
     }
 
-    public boolean isNewReleasesButtonVisible() {
-        return isElementVisible(newReleasesButton, "css", 10);
-    }
+    public boolean controlNewReleasesInHeader() {
+        Assertions.assertTrue(isElementVisible(newReleasesButton, "css", 10), "Yeni Çıkanlar butonu görünmüyor.");
+        Assertions.assertTrue(isElementClickable(newReleasesButton, "css", 10), "Yeni Çıkanlar butonu tıklanabilir değil.");
+        String actualNewReleasesText = getNewReleasesTextDisplay();
+        Assertions.assertTrue(actualNewReleasesText.contains(expectedNewReleasesText),
+                "Yeni Çıkanlar yazısı yanlış: Beklenen: " + expectedNewReleasesText + ", Bulunan: " + actualNewReleasesText);
 
-    public boolean isNewReleasesButtonClickable() {
-        return isElementClickable(newReleasesButton, "css", 10);
+        return true;
     }
 
     public String getNewReleasesTextDisplay() {
         return getText(newReleasesButton, "css");
     }
-
-
 
 
 }

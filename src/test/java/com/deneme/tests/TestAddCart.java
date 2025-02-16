@@ -13,81 +13,36 @@ public class TestAddCart extends Driver {
         String expectedUrl = "https://www.amazon.com.tr/";
         Assertions.assertEquals(expectedUrl, currentUrl,
                 "Geçerli sayfa Amazon anasayfası değil.");
-        homePage.isCookieButtonVisible();
-        homePage.isCookieButtonClickable();
         homePage.clickCookieButton();
-
-        Assertions.assertTrue(homePage.isCartButtonVisible(), "Sepet butonu görünmüyor.");
-        Assertions.assertTrue(homePage.isCartButtonClickable(), "Sepet butonu tıklanabilir değil.");
-        String actualCartText = homePage.getCartTextDisplay();
-        Assertions.assertTrue(actualCartText.contains(homePage.expectedCartText),
-                "Sepet yazısı yanlış: Beklenen: " + homePage.expectedCartText + ", Bulunan: " + actualCartText);
-
-        Assertions.assertTrue(homePage.isOrdersButtonVisible(), "Siparişler butonu görünmüyor.");
-        Assertions.assertTrue(homePage.isOrdersButtonClickable(), "Siparişler butonu tıklanabilir değil.");
-        String actualOrdersText = homePage.getOrdersTextDisplay();
-        Assertions.assertTrue(actualOrdersText.contains(homePage.expectedOrdersText),
-                "Siparişler yazısı yanlış: Beklenen: " + homePage.expectedOrdersText + ", Bulunan: " + actualOrdersText);
-
-        Assertions.assertTrue(homePage.isBestSellersButtonVisible(), "Çok Satanlar butonu görünmüyor.");
-        Assertions.assertTrue(homePage.isBestSellersButtonClickable(), "Çok Satanlar butonu tıklanabilir değil.");
-        String actualBestSellersText = homePage.getBestSellersTextDisplay();
-        Assertions.assertEquals(homePage.expectedBestSellersText, actualBestSellersText,
-                "Çok Satanlar yazısı yanlış: Beklenen: " + homePage.expectedBestSellersText + ", Bulunan: " + actualBestSellersText);
-
-        Assertions.assertTrue(homePage.isTodaysDealsButtonVisible(), "Günün Fırsatları butonu görünmüyor.");
-        Assertions.assertTrue(homePage.isTodaysDealsButtonClickable(), "Günün Fırsatları butonu tıklanabilir değil.");
-        String actualTodaysDealsText = homePage.getTodaysDealsTextDisplay();
-        Assertions.assertEquals(homePage.expectedTodaysDealsText, actualTodaysDealsText,
-                "Günün Fırsatları yazısı yanlış: Beklenen: " + homePage.expectedTodaysDealsText + ", Bulunan: " + actualTodaysDealsText);
-
-        // Yeni Çıkanlar butonu doğrula
-        Assertions.assertTrue(homePage.isNewReleasesButtonVisible(), "Yeni Çıkanlar butonu görünmüyor.");
-        Assertions.assertTrue(homePage.isNewReleasesButtonClickable(), "Yeni Çıkanlar butonu tıklanabilir değil.");
-        String actualNewReleasesText = homePage.getNewReleasesTextDisplay();
-        Assertions.assertEquals(homePage.expectedNewReleasesText, actualNewReleasesText,
-                "Yeni Çıkanlar yazısı yanlış: Beklenen: " + homePage.expectedNewReleasesText + ", Bulunan: " + actualNewReleasesText);
-
+        homePage.controlCartInHeader();
+        homePage.controlOrdersInHeader();
+        homePage.controlBestSellersInHeader();
+        homePage.controlTodaysDealsInHeader();
+        homePage.controlNewReleasesInHeader();
         String actualGuestAccountText = homePage.getAccountTextDisplay();
         Assertions.assertEquals(homePage.expectedGuestAccountText, actualGuestAccountText,
                 "Hesap girişi metni beklendiği gibi değil veya bulunamadı.");
-        /*homePage.isLoginButtonClickable();
-        homePage.isLoginButtonVisible();
-        homePage.clickLoginButton();
-        loginPage.isEmailTextboxClickable();
-        loginPage.isEmailTextBoxVisible();
-        loginPage.sendEmailTextBox("ceydaulux@gmail.com");*/
+        homePage.clickWriteEnterSearch();
 
-        homePage.isSearchBoxVisible();
-        homePage.isSearchBoxClickable();
-        homePage.clickSearchBox();
-        homePage.sendSearchBox("airpods");
-        homePage.pressEnterSearchBox();
 
         Assertions.assertEquals(categoryPage.expectedResultsText, categoryPage.getResultsTextDisplay(),
                 "Kategori sayfası açılamadı.");
         Assertions.assertEquals(categoryPage.expectedSearchText, categoryPage.getSearchTextDisplay(),
                 "Kategori sayfasına aratılan ürün doğru aratılmadı.");
         categoryPage.scrollPage();
-        categoryPage.isSelectProductVisible();
-        categoryPage.isSelectProductClickable();
         String productTitle = categoryPage.getProductTitle();
         //System.out.println("Ürün Başlığı: " + productTitle);
-        categoryPage.clickSelectProduct();
+        categoryPage.selectProduct();
         categoryPage.scrollAUpPage();
         categoryPage.waitbymilliseconds();
-        cartPage.isCartIconVisible();
-        cartPage.isCartIconClickable();
-        cartPage.waitbymilliseconds();
-        cartPage.clickCartIcon();
 
-        cartPage.isBuyButtonVisible();
-        cartPage.isBuyButtonClickable();
+
+        cartPage.clickCartIconInHeader();
+        Assertions.assertEquals(cartPage.expectedUrl,driver.getCurrentUrl(),
+                "Sepet sayfası başarıyla açıldı");
         cartPage.clickBuyButton();
 
-        /*String actualLoginPageText = loginPage.getLoginPageTextDisplay();*/
-        /*Assertions.assertEquals(loginPage.expectedLoginPageText, actualLoginPageText,
-                "Giriş Yap-Email sayfası beklendiği gibi değil veya bulunamadı.");*/
+
         loginPage.isEmailTextboxClickable();
         loginPage.isEmailTextBoxVisible();
         loginPage.sendEmailTextBox("ceydaulux@gmail.com");
@@ -106,9 +61,10 @@ public class TestAddCart extends Driver {
         loginPage.isLoginButtonVisible();
         loginPage.isLoginButtonClickable();
         loginPage.clickLoginButton();
-        /*String actualLoginAccountText = homePage.getAccountTextDisplay();
-        Assertions.assertEquals(homePage.expectedLoginAccountText, actualLoginAccountText,
-                "Hesap girişi metni beklendiği gibi değil veya bulunamadı."); */
+
+
+        Assertions.assertEquals(paymentPage.expectedUrl,driver.getCurrentUrl(),
+                "Ödeme sayfası başarılı bir şekilde açıldı");
 
         paymentPage.isNameBoxVisible();
         paymentPage.isNameBoxClickable();
@@ -142,13 +98,22 @@ public class TestAddCart extends Driver {
 
         paymentPage.scrollToCartIcon();
         paymentPage.isAddressStateVisible();
+
         paymentPage.isAddressStateClickable();
+
         paymentPage.clickAddressState();
-        paymentPage.sendAddressState("bak");
+        paymentPage.sendAddressState("eyüp");
 
         paymentPage.isCityCompleteVisible();
         paymentPage.isCityCompleteClickable();
         paymentPage.clickCityComplete();
+
+        paymentPage.isAddressDistrictVisible();
+        paymentPage.isAddressDistrictClickable();
+        paymentPage.clickAddressDistrict();
+        paymentPage.sendAddressDistrict("gök");
+        paymentPage.clickCityComplete();
+
 
     }
 
